@@ -3,6 +3,7 @@ import {prisma} from "@/lib/db/prisma";
 import {fromZodError} from "zod-validation-error";
 import {CommonResponse, ErrorResponse, Receivable} from "@/app/api/@types";
 import {ReceivableSchema} from "@/lib/api/validators/models/receivable";
+import StatusCode from "status-code-enum";
 
 export async function POST(req: NextRequest) {
     try {
@@ -16,7 +17,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json<ErrorResponse>({
                 status: validationError.name,
                 message: validationError.message
-            }, {status: 400})
+            }, {status: StatusCode.ClientErrorBadRequest})
         }
 
         const result =
@@ -25,7 +26,7 @@ export async function POST(req: NextRequest) {
             })
 
         return NextResponse.json<CommonResponse>({message: "Receivable created successfully"}, {
-            status: 201,
+            status: StatusCode.SuccessCreated,
             headers: {"Content-Type": "application/json"}
         })
     } catch (error) {
@@ -34,6 +35,6 @@ export async function POST(req: NextRequest) {
         return NextResponse.json<ErrorResponse>({
             status: "InternalServerError",
             message: 'Server error!'
-        }, {status: 201})
+        }, {status: StatusCode.ServerErrorInternal})
     }
 }
