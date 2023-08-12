@@ -8,7 +8,12 @@ export async function GET(req: NextRequest) {
         const totalInvoices = await prisma.receivable.count();
 
         const totalOpenInvoices = await prisma.receivable.count({
-            where: {closedDate: null}
+            where: {
+                AND: [
+                    {closedDate: null},
+                    {cancelled: null}
+                ]
+            }
         });
 
         const totalClosedInvoices = totalInvoices - totalOpenInvoices;
@@ -18,7 +23,12 @@ export async function GET(req: NextRequest) {
             _avg: {openingValue: true},
             _max: {openingValue: true},
             _min: {openingValue: true},
-            where: {closedDate: null}
+            where: {
+                AND: [
+                    {closedDate: null},
+                    {cancelled: null} // TODO: check also for false
+                ]
+            }
         });
 
         const closedInvoicesAggregate = await prisma.receivable.aggregate({
@@ -26,7 +36,12 @@ export async function GET(req: NextRequest) {
             _avg: {paidValue: true},
             _max: {paidValue: true},
             _min: {paidValue: true},
-            where: {closedDate: {not: null}}
+            where: {
+                AND: [
+                    {closedDate: {not: null}},
+                    {cancelled: null} // TODO: check also for false
+                ]
+            }
         });
 
         const summaryStatistics: ReceivableSummaryStatisticsResponse = {
