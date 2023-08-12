@@ -1,6 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 import {prisma} from "@/lib/db/prisma";
 import {z} from "zod";
+import {fromZodError} from "zod-validation-error";
 
 export const ReceivableSchema = z.object({
     reference: z.string(),
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
         const validation = ReceivableSchema.safeParse(payload);
 
         if (!validation.success) {
-            const validationError = validation.error
+            const validationError = fromZodError(validation.error)
 
             return NextResponse.json<ErrorResponse>({
                 status: validationError.name,
