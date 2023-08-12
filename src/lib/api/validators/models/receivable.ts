@@ -26,3 +26,5 @@ export const ReceivableSchema = z.object({
             ? new Date(data.closedDate).getTime() >= new Date(data.issueDate).getTime()
             : true,
         {message: "Closed date should be greater or equal to issue date"})
+
+export const ReceivablesSchema = ReceivableSchema.array()
