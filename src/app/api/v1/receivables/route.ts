@@ -5,6 +5,28 @@ import {CommonResponse, ErrorResponse, Receivable} from "@/app/api/@types";
 import {ReceivableSchema} from "@/lib/api/validators/models/receivable";
 import StatusCode from "status-code-enum";
 
+/**
+ * @swagger
+ * /receivables:
+ *   get:
+ *     summary: Retrieves a list of receivables
+ *     description: Returns a list of all receivables available in the system.
+ *     responses:
+ *       200:
+ *         description: Successful retrieval of receivables
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/definitions/Receivable'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/ErrorResponse'
+ */
 export async function GET(req: NextRequest) {
     try {
         const receivables: Receivable[] = await prisma.receivable.findMany()
@@ -20,6 +42,38 @@ export async function GET(req: NextRequest) {
     }
 }
 
+/**
+ * @swagger
+ * /receivables:
+ *   post:
+ *     summary: Creates a new receivable
+ *     description: Validates the provided data and creates a new receivable in the system.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/Receivable'
+ *     responses:
+ *       201:
+ *         description: Receivable successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/CommonResponse'
+ *       400:
+ *         description: Bad Request - Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/ErrorResponse'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/ErrorResponse'
+ */
 export async function POST(req: NextRequest) {
     try {
         const payload: Receivable = await req.json()

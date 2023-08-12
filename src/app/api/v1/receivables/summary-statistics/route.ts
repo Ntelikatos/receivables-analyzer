@@ -3,6 +3,26 @@ import {ErrorResponse, ReceivableSummaryStatisticsResponse} from "@/app/api/@typ
 import {prisma} from "@/lib/db/prisma";
 import StatusCode from "status-code-enum";
 
+/**
+ * @swagger
+ * /receivables/statistics:
+ *   get:
+ *     summary: Retrieves a summary of receivables statistics
+ *     description: Fetches aggregate statistics about the receivables, including count, total value, average value, maximum value, and minimum value for both open and closed invoices.
+ *     responses:
+ *       200:
+ *         description: Successful retrieval of receivables statistics
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/ReceivableSummaryStatisticsResponse'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/ErrorResponse'
+ */
 export async function GET(req: NextRequest) {
     try {
         const totalInvoices = await prisma.receivable.count();
