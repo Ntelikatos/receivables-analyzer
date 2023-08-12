@@ -22,25 +22,7 @@ export const ReceivableSchema = z.object({
     debtorRegistrationNumber: z.string().optional().nullable(),
 })
 
-export type Receivable = {
-    reference: string,
-    currencyCode: string,
-    issueDate: string,
-    openingValue: number,
-    paidValue: number,
-    dueDate: string,
-    closedDate?: string,
-    cancelled: boolean,
-    debtorName: string,
-    debtorReference: string,
-    debtorAddress1?: string,
-    debtorAddress2?: string,
-    debtorTown?: string,
-    debtorState?: string,
-    debtorZip?: string,
-    debtorCountryCode: string,
-    debtorRegistrationNumber?: string
-}
+export type Receivable = z.infer<typeof ReceivableSchema> & { id?: number }
 
 export type CommonResponse = { message: string };
 export type ErrorResponse = { status: string, message: string };
