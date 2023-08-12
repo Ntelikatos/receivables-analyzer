@@ -1,15 +1,16 @@
 'use client'
 
+import {useMemo} from "react";
 import {
     useCreateReceivablesMutation,
     useGetReceivablesQuery,
     useGetReceivablesSummaryStatisticsQuery
 } from "@/redux/services/receivablesApi";
+import {faker} from '@faker-js/faker';
 import {Receivable, ReceivableSummaryStatisticsResponse} from "@/app/api/@types";
 import {v4 as uuidv4} from 'uuid';
 import {Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, getKeyValue} from "@nextui-org/table";
 import {Spinner} from "@nextui-org/spinner";
-import {useMemo} from "react";
 import {Button} from "@nextui-org/button";
 import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
 import {Doughnut} from 'react-chartjs-2';
@@ -22,28 +23,30 @@ export default function Home() {
     const [createReceivables, {isLoading: isLoadingCreateReceivables}] = useCreateReceivablesMutation()
 
     const receivablesDummyPayload: Receivable[] = [
+        // Opening receivable
         {
             "reference": uuidv4(),
-            "currencyCode": "USD",
+            "currencyCode": faker.finance.currencyCode(),
             "issueDate": "2023-02-22",
-            "openingValue": 250,
-            "paidValue": 100,
+            "openingValue": faker.number.float({min: 10, max: 1000, precision: 2}),
+            "paidValue": faker.number.float({min: 30, max: 900, precision: 2}),
             "dueDate": "2023-03-05",
-            "debtorName": "John Doe",
+            "debtorName": faker.person.fullName(),
             "debtorReference": uuidv4(),
-            "debtorCountryCode": "gr"
+            "debtorCountryCode": faker.location.countryCode()
         },
+        // Closed receivable
         {
             "reference": uuidv4(),
-            "currencyCode": "USD",
+            "currencyCode": faker.finance.currencyCode(),
             "issueDate": "2023-02-22",
-            "openingValue": 250,
-            "paidValue": 100,
+            "openingValue": 130.23,
+            "paidValue": 130.23,
             "dueDate": "2023-03-05",
             "closedDate": "2023-03-06",
-            "debtorName": "John Doe",
+            "debtorName": faker.person.fullName(),
             "debtorReference": uuidv4(),
-            "debtorCountryCode": "gr"
+            "debtorCountryCode": faker.location.countryCode()
         }
     ]
 
@@ -107,8 +110,7 @@ export default function Home() {
             <h1 className="mb-6 text-5xl">Receivables</h1>
             <div className="mb-6">
                 <Table isHeaderSticky aria-label="Example table with dynamic content" classNames={{
-                    base: "max-h-[520px]",
-                    table: "min-h-[420px]",
+                    base: "max-h-[520px]"
                 }}>
                     <TableHeader columns={columns}>
                         {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
