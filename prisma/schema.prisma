@@ -9,3 +9,24 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Receivable {
+  id                       Int      @id @default(autoincrement())
+  reference                String
+  currencyCode             String
+  issueDate                String
+  openingValue             Float
+  paidValue                Float
+  dueDate                  String
+  closedDate               String?
+  cancelled                Boolean?
+  debtorName               String
+  debtorReference          String
+  debtorAddress1           String?
+  debtorAddress2           String?
+  debtorTown               String?
+  debtorState              String?
+  debtorZip                String?
+  debtorCountryCode        String
+  debtorRegistrationNumber String?
+}
