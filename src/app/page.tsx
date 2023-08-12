@@ -10,6 +10,7 @@ import {v4 as uuidv4} from 'uuid';
 import {Table, TableHeader, TableBody, TableColumn, TableRow, TableCell, getKeyValue} from "@nextui-org/table";
 import {Spinner} from "@nextui-org/spinner";
 import {useMemo} from "react";
+import {Button} from "@nextui-org/button";
 
 export default function Home() {
     const {data: receivables, isLoading: isLoadingReceivables} = useGetReceivablesQuery()
@@ -119,7 +120,11 @@ export default function Home() {
             </Table>
             <h1>Receivables Summary Statistics</h1>
             <p>{isLoadingSummaryStatistics ? 'Loading...' : JSON.stringify(summaryStatistics)}</p>
-            <button onClick={() => createReceivables(receivablesDummyPayload)}>Create Receivables</button>
+            <Button
+                color="primary"
+                isLoading={isLoadingCreateReceivables}
+                onClick={() => createReceivables(receivablesDummyPayload)}
+            >Create</Button>
         </main>
     )
 }
