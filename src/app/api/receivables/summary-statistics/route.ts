@@ -1,5 +1,5 @@
 import {NextRequest, NextResponse} from "next/server";
-import {ErrorResponse} from "@/app/api/@types";
+import {ErrorResponse, ReceivableSummaryStatisticsResponse} from "@/app/api/@types";
 import {prisma} from "@/lib/db/prisma";
 import StatusCode from "status-code-enum";
 
@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
             where: {closedDate: {not: null}}
         });
 
-        const summaryStatistics = {
+        const summaryStatistics: ReceivableSummaryStatisticsResponse = {
             totalInvoices,
             totalOpenInvoices,
             totalClosedInvoices,
@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
             smallestClosedInvoice: closedInvoicesAggregate._min.paidValue ?? 0
         }
 
-        return NextResponse.json(summaryStatistics, {headers: {"Content-Type": "application/json"}})
+        return NextResponse.json<ReceivableSummaryStatisticsResponse>(summaryStatistics, {headers: {"Content-Type": "application/json"}})
     } catch (error) {
         // @ts-ignore
         console.error(error?.message);
