@@ -130,7 +130,8 @@ export default function Home() {
     }, [receivables])
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <main
+            className="light text-foreground bg-background flex min-h-screen flex-col items-center justify-between p-24">
             <h1 className="mb-6 text-5xl">Receivables</h1>
             <div className="mb-6">
                 <Table isHeaderSticky aria-label="Example table with dynamic content" classNames={{
