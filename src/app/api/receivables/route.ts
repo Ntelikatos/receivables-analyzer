@@ -5,6 +5,21 @@ import {CommonResponse, ErrorResponse, Receivable} from "@/app/api/@types";
 import {ReceivableSchema} from "@/lib/api/validators/models/receivable";
 import StatusCode from "status-code-enum";
 
+export async function GET(req: NextRequest) {
+    try {
+        const receivables: Receivable[] = await prisma.receivable.findMany()
+
+        return NextResponse.json<Receivable[]>(receivables, {headers: {"Content-Type": "application/json"}})
+    } catch (error) {
+        // @ts-ignore
+        console.error(error?.message);
+        return NextResponse.json<ErrorResponse>({
+            status: "InternalServerError",
+            message: 'Server error!'
+        }, {status: StatusCode.ServerErrorInternal})
+    }
+}
+
 export async function POST(req: NextRequest) {
     try {
         const payload: Receivable = await req.json()
