@@ -14,14 +14,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/receivables",
-					"protocol": "http",
+					"raw": "{{API_URL}}/receivables",
 					"host": [
-						"localhost"
+						"{{API_URL}}"
 					],
-					"port": "3000",
 					"path": [
-						"api",
 						"receivables"
 					]
 				},
@@ -35,14 +32,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/receivables/summary-statistics",
-					"protocol": "http",
+					"raw": "{{API_URL}}/receivables/summary-statistics",
 					"host": [
-						"localhost"
+						"{{API_URL}}"
 					],
-					"port": "3000",
 					"path": [
-						"api",
 						"receivables",
 						"summary-statistics"
 					]
@@ -72,14 +66,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/receivables/batch",
-					"protocol": "http",
+					"raw": "{{API_URL}}/receivables/batch",
 					"host": [
-						"localhost"
+						"{{API_URL}}"
 					],
-					"port": "3000",
 					"path": [
-						"api",
 						"receivables",
 						"batch"
 					]
@@ -109,20 +100,44 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/receivables",
-					"protocol": "http",
+					"raw": "{{API_URL}}/receivables",
 					"host": [
-						"localhost"
+						"{{API_URL}}"
 					],
-					"port": "3000",
 					"path": [
-						"api",
 						"receivables"
 					]
 				},
 				"description": "Use this endpoint to create a new receivable"
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_URL",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
