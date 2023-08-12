@@ -33,14 +33,14 @@ export async function GET(req: NextRequest) {
             totalInvoices,
             totalOpenInvoices,
             totalClosedInvoices,
-            openInvoicesValue: openInvoicesAggregate._sum.openingValue,
-            closedInvoicesValue: closedInvoicesAggregate._sum.paidValue,
-            averageOpenInvoiceValue: openInvoicesAggregate._avg.openingValue,
-            averageClosedInvoiceValue: closedInvoicesAggregate._avg.paidValue,
-            largestOpenInvoice: openInvoicesAggregate._max.openingValue,
-            smallestOpenInvoice: openInvoicesAggregate._min.openingValue,
-            largestClosedInvoice: closedInvoicesAggregate._max.paidValue,
-            smallestClosedInvoice: closedInvoicesAggregate._min.paidValue
+            openInvoicesValue: openInvoicesAggregate._sum.openingValue ?? 0,
+            closedInvoicesValue: closedInvoicesAggregate._sum.paidValue ?? 0,
+            averageOpenInvoiceValue: openInvoicesAggregate._avg.openingValue ?? 0,
+            averageClosedInvoiceValue: closedInvoicesAggregate._avg.paidValue ?? 0,
+            largestOpenInvoice: openInvoicesAggregate._max.openingValue ?? 0,
+            smallestOpenInvoice: openInvoicesAggregate._min.openingValue ?? 0,
+            largestClosedInvoice: closedInvoicesAggregate._max.paidValue ?? 0,
+            smallestClosedInvoice: closedInvoicesAggregate._min.paidValue ?? 0
         }
 
         return NextResponse.json(summaryStatistics, {headers: {"Content-Type": "application/json"}})
