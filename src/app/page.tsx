@@ -22,20 +22,7 @@ export default function Home() {
     const {data: summaryStatistics, isLoading: isLoadingSummaryStatistics} = useGetReceivablesSummaryStatisticsQuery()
     const [createReceivables, {isLoading: isLoadingCreateReceivables}] = useCreateReceivablesMutation()
 
-    const receivablesDummyPayload: Receivable[] = [
-        // Opening receivable
-        {
-            "reference": uuidv4(),
-            "currencyCode": faker.finance.currencyCode(),
-            "issueDate": "2023-02-22",
-            "openingValue": faker.number.float({min: 10, max: 1000, precision: 2}),
-            "paidValue": faker.number.float({min: 30, max: 900, precision: 2}),
-            "dueDate": "2023-03-05",
-            "debtorName": faker.person.fullName(),
-            "debtorReference": uuidv4(),
-            "debtorCountryCode": faker.location.countryCode()
-        },
-        // Closed receivable
+    const openReceivablesDummyPayload: Receivable[] = [
         {
             "reference": uuidv4(),
             "currencyCode": faker.finance.currencyCode(),
@@ -47,6 +34,43 @@ export default function Home() {
             "debtorName": faker.person.fullName(),
             "debtorReference": uuidv4(),
             "debtorCountryCode": faker.location.countryCode()
+        },
+        {
+            "reference": uuidv4(),
+            "currencyCode": faker.finance.currencyCode(),
+            "issueDate": "2023-02-22",
+            "openingValue": 130.23,
+            "paidValue": 130.23,
+            "dueDate": "2023-03-05",
+            "closedDate": "2023-03-06",
+            "debtorName": faker.person.fullName(),
+            "debtorReference": uuidv4(),
+            "debtorCountryCode": faker.location.countryCode()
+        }
+    ]
+
+    const closedReceivablesDummyPayload: Receivable[] = [
+        {
+            "reference": uuidv4(),
+            "currencyCode": faker.finance.currencyCode(),
+            "issueDate": "2023-02-22",
+            "openingValue": faker.number.float({min: 10, max: 1000, precision: 2}),
+            "paidValue": faker.number.float({min: 30, max: 900, precision: 2}),
+            "dueDate": "2023-03-05",
+            "debtorName": faker.person.fullName(),
+            "debtorReference": uuidv4(),
+            "debtorCountryCode": faker.location.countryCode(),
+        },
+        {
+            "reference": uuidv4(),
+            "currencyCode": faker.finance.currencyCode(),
+            "issueDate": "2023-02-22",
+            "openingValue": faker.number.float({min: 10, max: 1000, precision: 2}),
+            "paidValue": faker.number.float({min: 30, max: 900, precision: 2}),
+            "dueDate": "2023-03-05",
+            "debtorName": faker.person.fullName(),
+            "debtorReference": uuidv4(),
+            "debtorCountryCode": faker.location.countryCode(),
         }
     ]
 
@@ -135,8 +159,15 @@ export default function Home() {
                 color="primary"
                 className="mb-6"
                 isLoading={isLoadingCreateReceivables}
-                onClick={() => createReceivables(receivablesDummyPayload)}
-            >Create receivables</Button>
+                onClick={() => createReceivables(openReceivablesDummyPayload)}
+            >Create open receivables</Button>
+            <Button
+                size="lg"
+                color="primary"
+                className="mb-6"
+                isLoading={isLoadingCreateReceivables}
+                onClick={() => createReceivables(closedReceivablesDummyPayload)}
+            >Create closed receivables</Button>
 
             <h1 className="mb-6 text-5xl">Receivables Summary Statistics</h1>
             <div className="mb-6">
