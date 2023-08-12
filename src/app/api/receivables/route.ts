@@ -3,14 +3,22 @@ import {prisma} from "@/lib/db/prisma";
 import {z} from "zod";
 import {fromZodError} from "zod-validation-error";
 
+export const ISO8601RegX = /^(?:\d{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|\d{2}(?:0[48]|[2468][048]|[13579][26])-02-29)$/
+
+export const ISODateSchema = z.string()
+    .refine(
+        (data) => data.match(ISO8601RegX),
+        "Invalid date format (YYYY-MM-DD)"
+    )
+
 export const ReceivableSchema = z.object({
     reference: z.string(),
     currencyCode: z.string(),
-    issueDate: z.string(),
+    issueDate: ISODateSchema,
     openingValue: z.number().positive(),
     paidValue: z.number().positive(),
-    dueDate: z.string(),
-    closedDate: z.string().optional().nullable(),
+    dueDate: ISODateSchema,
+    closedDate: ISODateSchema.optional().nullable(),
     cancelled: z.boolean().optional().nullable(),
     debtorName: z.string(),
     debtorReference: z.string(),
@@ -22,6 +30,12 @@ export const ReceivableSchema = z.object({
     debtorCountryCode: z.string(),
     debtorRegistrationNumber: z.string().optional().nullable(),
 })
+    .refine((data) => new Date(data.issueDate).getTime() <= new Date(data.dueDate).getTime(),
+        {message: "Issue date should be less or equal to due date"})
+    .refine((data) => data.closedDate
+            ? new Date(data.closedDate).getTime() >= new Date(data.issueDate).getTime()
+            : true,
+        {message: "Closed date should be greater or equal to issue date"})
 
 export type Receivable = z.infer<typeof ReceivableSchema> & { id?: number }
 
