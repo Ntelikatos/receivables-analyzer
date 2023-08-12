@@ -106,7 +106,10 @@ export default function Home() {
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
             <h1 className="mb-6 text-5xl">Receivables</h1>
             <div className="mb-6">
-                <Table aria-label="Example table with dynamic content">
+                <Table isHeaderSticky aria-label="Example table with dynamic content" classNames={{
+                    base: "max-h-[520px]",
+                    table: "min-h-[420px]",
+                }}>
                     <TableHeader columns={columns}>
                         {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
                     </TableHeader>
