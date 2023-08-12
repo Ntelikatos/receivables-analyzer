@@ -35,6 +35,28 @@ export const receivablesApi = createApi({
             },
             invalidatesTags: ['RECEIVABLE'],
         }),
+        createReceivables: builder.mutation<CommonResponse, Receivable[]>({
+            query: (payload) => ({
+                url: `/receivables/batch`,
+                method: 'POST',
+                body: payload,
+            }),
+            async onQueryStarted(payload, {dispatch, queryFulfilled}) {
+                const patchResult = dispatch(
+                    receivablesApi.util.updateQueryData('getReceivables', undefined, (draft) => {
+                        // The `draft` is Immer-wrapped and can be "mutated" like in createSlice
+                        draft.push(...payload)
+                    })
+                )
+
+                try {
+                    await queryFulfilled
+                } catch {
+                    patchResult.undo()
+                }
+            },
+            invalidatesTags: ['RECEIVABLE'],
+        })
     }),
 });
 
