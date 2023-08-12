@@ -154,20 +154,23 @@ export default function Home() {
                 </Table>
             </div>
 
-            <Button
-                size="lg"
-                color="primary"
-                className="mb-6"
-                isLoading={isLoadingCreateReceivables}
-                onClick={() => createReceivables(openReceivablesDummyPayload)}
-            >Create open receivables</Button>
-            <Button
-                size="lg"
-                color="primary"
-                className="mb-6"
-                isLoading={isLoadingCreateReceivables}
-                onClick={() => createReceivables(closedReceivablesDummyPayload)}
-            >Create closed receivables</Button>
+            <div className="flex gap-5">
+                <Button
+                    size="lg"
+                    color="primary"
+                    className="mb-6"
+                    isLoading={isLoadingCreateReceivables}
+                    onClick={() => createReceivables(openReceivablesDummyPayload)}
+                >Create open receivables</Button>
+                <Button
+                    size="lg"
+                    color="primary"
+                    className="mb-6"
+                    isLoading={isLoadingCreateReceivables}
+                    onClick={() => createReceivables(closedReceivablesDummyPayload)}
+                >Create closed receivables</Button>
+            </div>
+
 
             <h1 className="mb-6 text-5xl">Receivables Summary Statistics</h1>
             <div className="mb-6">
