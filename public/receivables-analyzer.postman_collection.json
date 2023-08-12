@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "fd686045-839a-499e-8902-30a98cef7c0d",
+		"name": "receivables-analyzer",
+		"description": "Here you can find endpoint to get all, create one or many and get summary statistics for receivables",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17806340",
+		"_collection_link": "https://lunar-zodiac-209830.postman.co/workspace/3302cff8-857e-4d15-929e-1e41f4d2b5b4/collection/17806340-fd686045-839a-499e-8902-30a98cef7c0d?action=share&creator=17806340&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "get all receivables",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/receivables",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"receivables"
+					]
+				},
+				"description": "Use this endpoint to get all the receivables"
+			},
+			"response": []
+		},
+		{
+			"name": "get receivables summary statistics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/receivables/summary-statistics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"receivables",
+						"summary-statistics"
+					]
+				},
+				"description": "Use this endpoint to get receivables summary statistics"
+			},
+			"response": []
+		},
+		{
+			"name": "create many receivables ( batch )",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"reference\": \"asdasd\",\n        \"currencyCode\": \"USD\",\n        \"issueDate\": \"2023-02-22\",\n        \"openingValue\": 250.23,\n        \"paidValue\": 100.34,\n        \"dueDate\": \"2023-03-05\",\n        \"closedDate\": \"2023-03-04\",\n        \"debtorName\": \"John Doe\",\n        \"debtorReference\": \"asdasdad\",\n        \"debtorCountryCode\": \"gr\"\n    },\n    {\n        \"reference\": \"asdasd\",\n        \"currencyCode\": \"USD\",\n        \"issueDate\": \"2023-02-22\",\n        \"openingValue\": 122.4,\n        \"paidValue\": 122.4,\n        \"dueDate\": \"2023-03-05\",\n        \"closedDate\": \"2023-03-06\",\n        \"debtorName\": \"John Doe\",\n        \"debtorReference\": \"asdasdad\",\n        \"debtorCountryCode\": \"gr\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/receivables/batch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"receivables",
+						"batch"
+					]
+				},
+				"description": "Use this endpoint to create many receivables at the same time"
+			},
+			"response": []
+		},
+		{
+			"name": "create receivable",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"reference\": \"asdasd\",\n    \"currencyCode\": \"USD\",\n    \"issueDate\": \"2023-02-22\",\n    \"openingValue\": 250,\n    \"paidValue\": 250,\n    \"dueDate\": \"2023-03-05\",\n    \"closedDate\": \"2023-03-04\",\n    \"debtorName\": \"John Doe\",\n    \"debtorReference\": \"asdasdad\",\n    \"debtorCountryCode\": \"gr\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/receivables",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"receivables"
+					]
+				},
+				"description": "Use this endpoint to create a new receivable"
+			},
+			"response": []
+		}
+	]
+}
