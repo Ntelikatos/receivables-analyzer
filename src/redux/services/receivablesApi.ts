@@ -61,5 +61,7 @@ export const receivablesApi = createApi({
 });
 
 export const {
-    useGetReceivablesQuery
+    useGetReceivablesQuery,
+    useCreateReceivableMutation,
+    useCreateReceivablesMutation
 } = receivablesApi
