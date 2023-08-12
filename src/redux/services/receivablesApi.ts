@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {CommonResponse, Receivable} from "@/app/api/@types";
+import {CommonResponse, Receivable, ReceivableSummaryStatisticsResponse} from "@/app/api/@types";
 
 export const receivablesApi = createApi({
     tagTypes: ['RECEIVABLE'],
@@ -34,6 +34,10 @@ export const receivablesApi = createApi({
                 }
             },
             invalidatesTags: ['RECEIVABLE'],
+        }),
+        getReceivablesSummaryStatistics: builder.query<ReceivableSummaryStatisticsResponse, void>({
+            query: () => `/receivables/summary-statistics`,
+            providesTags: ['RECEIVABLE'], // TODO: add receivable statistics tag
         }),
         createReceivables: builder.mutation<CommonResponse, Receivable[]>({
             query: (payload) => ({
