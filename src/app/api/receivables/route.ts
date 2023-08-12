@@ -31,6 +31,17 @@ export async function POST(req: NextRequest) {
     try {
         const payload: Receivable = await req.json()
 
+        const validation = ReceivableSchema.safeParse(payload);
+
+        if (!validation.success) {
+            const validationError = validation.error
+
+            return NextResponse.json<ErrorResponse>({
+                status: validationError.name,
+                message: validationError.message
+            }, {status: 400})
+        }
+
         const result =
             await prisma.receivable.create({
                 data: payload,
