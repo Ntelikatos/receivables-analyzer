@@ -1,5 +1,26 @@
 import {NextRequest, NextResponse} from "next/server";
 import {prisma} from "@/lib/db/prisma";
+import {z} from "zod";
+
+export const ReceivableSchema = z.object({
+    reference: z.string(),
+    currencyCode: z.string(),
+    issueDate: z.string(),
+    openingValue: z.number().positive(),
+    paidValue: z.number().positive(),
+    dueDate: z.string(),
+    closedDate: z.string().optional().nullable(),
+    cancelled: z.boolean().optional().nullable(),
+    debtorName: z.string(),
+    debtorReference: z.string(),
+    debtorAddress1: z.string().optional().nullable(),
+    debtorAddress2: z.string().optional().nullable(),
+    debtorTown: z.string().optional().nullable(),
+    debtorState: z.string().optional().nullable(),
+    debtorZip: z.string().optional().nullable(),
+    debtorCountryCode: z.string(),
+    debtorRegistrationNumber: z.string().optional().nullable(),
+})
 
 export type Receivable = {
     reference: string,
