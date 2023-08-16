@@ -27,11 +27,14 @@ import StatusCode from "status-code-enum";
  *             schema:
  *               $ref: '#/definitions/ErrorResponse'
  */
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest, res: NextResponse) {
     try {
         const receivables: Receivable[] = await prisma.receivable.findMany()
 
-        return NextResponse.json<Receivable[]>(receivables, {headers: {"Content-Type": "application/json"}})
+        return NextResponse.json<Receivable[]>(receivables, {
+            statusText: 'OK',
+            headers: {"Content-Type": "application/json"}
+        })
     } catch (error) {
         // @ts-ignore
         console.error(error?.message);
