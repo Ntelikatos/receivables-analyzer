@@ -2,7 +2,7 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {CommonResponse, Receivable, ReceivableSummaryStatisticsResponse} from "@/app/api/@types";
 
 export const receivablesApi = createApi({
-    tagTypes: ['RECEIVABLE'],
+    tagTypes: ['RECEIVABLE', 'RECEIVABLE_STATISTICS'],
     reducerPath: 'receivableApi',
     baseQuery: fetchBaseQuery({
         baseUrl: process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000/api/v1"
@@ -33,11 +33,11 @@ export const receivablesApi = createApi({
                     patchResult.undo()
                 }
             },
-            invalidatesTags: ['RECEIVABLE'],
+            invalidatesTags: ['RECEIVABLE', 'RECEIVABLE_STATISTICS'],
         }),
         getReceivablesSummaryStatistics: builder.query<ReceivableSummaryStatisticsResponse, void>({
             query: () => `/receivables/summary-statistics`,
-            providesTags: ['RECEIVABLE'], // TODO: add receivable statistics tag
+            providesTags: ['RECEIVABLE_STATISTICS'],
         }),
         createReceivables: builder.mutation<CommonResponse, Receivable[]>({
             query: (payload) => ({
@@ -59,7 +59,7 @@ export const receivablesApi = createApi({
                     patchResult.undo()
                 }
             },
-            invalidatesTags: ['RECEIVABLE'],
+            invalidatesTags: ['RECEIVABLE', 'RECEIVABLE_STATISTICS'],
         })
     }),
 });
