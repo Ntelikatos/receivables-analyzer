@@ -1,6 +1,6 @@
 # receivables-analyzer
 
-## Hello 👋, I am Alexandros and this is my version of the Take Home Technical Test.
+## Hello 👋, I am Alexandros.
 
 ## Description:
 This repository provides a simple Full-stack application designed to accept, store receivables data, and retrieve summary statistics about the stored receivables data. The core focus is on providing information regarding the value of open and closed invoices.
